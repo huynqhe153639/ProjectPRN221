@@ -14,6 +14,7 @@ namespace Project.ViewModel
         public ICommand CloseWindownCommand { get; set; }
         public ICommand MaximiWindownCommand { get; set; }
         public ICommand MinimiWindownCommand { get; set; }
+        public ICommand MouseMoveWindownCommand { get; set; }
 
 
         public ControlBarViewModel() {
@@ -46,6 +47,14 @@ namespace Project.ViewModel
                         w.WindowState = WindowState.Minimized;
                     }
                     else w.WindowState = WindowState.Maximized;
+                }
+            });
+            MouseMoveWindownCommand = new ReplayCommand<UserControl>((p) => { return p == null ? false : true; }, (p) => {
+                FrameworkElement windown = GetWindownParent(p);
+                var w = windown as Window;
+                if (w != null)
+                {
+                    w.DragMove();
                 }
             });
         }
